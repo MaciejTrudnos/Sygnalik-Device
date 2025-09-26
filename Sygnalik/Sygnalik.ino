@@ -2,6 +2,15 @@
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
+#include <Arduino.h>
+#include "CST816D.h"
+
+#define I2C_SDA 4
+#define I2C_SCL 5
+#define TP_INT 0
+#define TP_RST 1
+
+CST816D touch(I2C_SDA, I2C_SCL, TP_RST, TP_INT);
 
 bool deviceConnected = false;
 String message = "Brak powiadomien";
@@ -45,7 +54,7 @@ class MyServerCallbacks : public BLEServerCallbacks
 void setup() {
   Serial.begin(115200);
   Serial.println("Start...");
-
+  touch.begin();
   display_init();
   label = lv_label_create(lv_scr_act());
   lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), 0);
@@ -88,6 +97,7 @@ void loop() {
 
   if (deviceConnected) {
     setLabel(message.c_str());
+    checkTouch();
   } else {
     setLabel("Polacz z urzadzeniem");
   }
@@ -96,4 +106,16 @@ void loop() {
 void setLabel(const char *txt) {
   lv_label_set_text(label, txt);
   lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+}
+
+void checkTouch() {
+  uint16_t touchX, touchY;
+  uint8_t gesture;
+  
+  bool touched = touch.getTouch(&touchX, &touchY, &gesture);
+  
+  if (touched) {
+    Serial.printf("Ekran dotknięty! X:%d, Y:%d, gesture: %x\n", touchX, touchY, gesture);
+    message = "Brak powiadomien";
+  }
 }
