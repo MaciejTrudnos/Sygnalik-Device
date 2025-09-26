@@ -1,10 +1,48 @@
 #include "display_config.h"
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEServer.h>
+
+bool deviceConnected = false;
+String message = "Brak powiadomien";
+
+#define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
+#define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 
 lv_obj_t *label;
-bool new_notification = true;
 
-void setup()
+class MyCallbacks : public BLECharacteristicCallbacks 
 {
+  void onWrite(BLECharacteristic *pCharacteristic) 
+  {
+    String rxValue = pCharacteristic->getValue().c_str();
+
+    if (rxValue.length() > 0) 
+    {
+      Serial.println(rxValue);
+      message = rxValue;
+    }
+  }
+};
+
+class MyServerCallbacks : public BLEServerCallbacks 
+{
+  void onConnect(BLEServer *pServer) 
+  {
+    deviceConnected = true;
+    Serial.println("Urządzenie połączone!");
+  };
+
+  void onDisconnect(BLEServer *pServer) 
+  {
+    deviceConnected = false;
+    Serial.println("Urządzenie rozłączone!");
+
+    BLEDevice::startAdvertising();
+  }
+};
+
+void setup() {
   Serial.begin(115200);
   Serial.println("Start...");
 
@@ -12,23 +50,46 @@ void setup()
   label = lv_label_create(lv_scr_act());
   lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), 0);
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x000000), 0);
-  setLabel("Uruchamianie...");
 
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
   pinMode(0, INPUT);
 
+  BLEDevice::init("Sygnalik");
+  BLEServer *pServer = BLEDevice::createServer();
+  pServer->setCallbacks(new MyServerCallbacks());
+
+  BLEService *pService = pServer->createService(SERVICE_UUID);
+
+  BLECharacteristic *pCharacteristic = pService->createCharacteristic(
+    CHARACTERISTIC_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
+
+  pCharacteristic->setValue("Sygnalik");
+
+  pCharacteristic->setCallbacks(new MyCallbacks());
+
+  pService->start();
+
+  BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
+  pAdvertising->addServiceUUID(SERVICE_UUID);
+  pAdvertising->setScanResponse(true);
+  pAdvertising->setMinPreferred(0x06);
+  pAdvertising->setMinPreferred(0x12);
+
+  BLEDevice::startAdvertising();
+
   Serial.println("Setup done");
 }
 
-void loop()
-{
-  lv_timer_handler(); // let LVGL work
+void loop() {
+  lv_timer_handler();
   delay(5);
 
-  if (new_notification) {
-    setLabel("Brak powiadomien");
-    new_notification = false;
+  if (deviceConnected) {
+    setLabel(message.c_str());
+  } else {
+    setLabel("Polacz z urzadzeniem");
   }
 }
 
