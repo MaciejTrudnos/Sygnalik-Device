@@ -15,6 +15,8 @@ CST816D touch(I2C_SDA, I2C_SCL, TP_RST, TP_INT);
 bool deviceConnected = false;
 String message = "Brak powiadomien";
 
+uint32_t bg_color = 0x000000;
+
 #define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 
@@ -29,6 +31,7 @@ class MyCallbacks : public BLECharacteristicCallbacks
     if (rxValue.length() > 0) 
     {
       Serial.println(rxValue);
+      bg_color = 0x008000;
       message = rxValue;
     }
   }
@@ -58,7 +61,7 @@ void setup() {
   display_init();
   label = lv_label_create(lv_scr_act());
   lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), 0);
-  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x000000), 0);
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(bg_color), 0);
 
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
@@ -104,6 +107,7 @@ void loop() {
 }
 
 void setLabel(const char *txt) {
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(bg_color), 0);
   lv_label_set_text(label, txt);
   lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 }
@@ -116,6 +120,7 @@ void checkTouch() {
   
   if (touched) {
     Serial.printf("Ekran dotknięty! X:%d, Y:%d, gesture: %x\n", touchX, touchY, gesture);
+    bg_color = 0x000000;
     message = "Brak powiadomien";
   }
 }
