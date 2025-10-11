@@ -1,13 +1,19 @@
-# Sygnalik-Device  
+# Sygnalik-Device
+A dedicated device that receives smartphone notifications via Bluetooth and displays them safely for motorcycle riders.
 
-The Sygnalik-Device receives smartphone messages via Bluetooth from the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) and displays them on the device.  
+## Motivation
+The device was designed to replace a smartphone in a motorcycle mount with a separate dedicated device.  
+This allows the phone to stay safely stored, while the device connects via Bluetooth, reducing the risk of damage while riding.
 
-## Supported notification types  
-- 📩 SMS
-- 📞 Incoming calls
-- 🚨 Speed camera alerts
+## About the Device
+The **Sygnalik-Device** connects via Bluetooth to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) and displays incoming messages directly on the device.
 
-## Dev Module Configuration in Arduino IDE  
+## Supported Notification Types
+- 📩 **SMS** – shows sender and message preview  
+- 📞 **Incoming calls** – shows caller ID / contact name  
+- 🚨 **Speed camera alerts** – shows warning icon and distance
+
+## Dev Module Configuration in Arduino IDE
 
 | Option                           | Value                                      |
 |----------------------------------|--------------------------------------------|
@@ -18,19 +24,18 @@ The Sygnalik-Device receives smartphone messages via Bluetooth from the [Sygnali
 | **Flash Frequency**              | 80MHz                                      |
 | **Flash Mode**                   | QIO                                        |
 | **Flash Size**                   | 4MB (32Mb)                                 |
-| **Partition Scheme**             | Huge APP (3MB No OTA / 1MB SPIFFS)         |
+| **Partition Scheme**             | Huge APP (3MB No OTA / 1MB SPIFFS)        |
 | **JTAG Adapter**                 | Integrated USB JTAG                        |
 
-## Image Converter to use in LVGL
+## Image Converter for LVGL
+1. Go to [LVGL Image Converter](https://lvgl.io/tools/imageconverter)  
+2. Select an image (BMP, JPG, PNG, or SVG)  
+3. Set **Color Format**: `CF_TRUE_COLOR`  
+4. Set **Output Format**: `C array`  
+5. Convert and save the file with a `*.cpp` extension  
+6. Update your file with the const variable format:
 
-1. Go to [Image Converter](https://lvgl.io/tools/imageconverter)
-2. Select image (BMP, JPG, PNG, or SVG)
-3. Set color format: `CF_TRUE_COLOR`
-4. Set output format: `C array`
-5. Convert and save file with `*.cpp` extension
-6. In your file update the const variable using the following format:
-
-```
+```cpp
 const lv_img_dsc_t variablename = {
     .header = {
         .cf = LV_IMG_CF_TRUE_COLOR,
@@ -42,4 +47,3 @@ const lv_img_dsc_t variablename = {
     .data_size = 57600 * LV_COLOR_SIZE / 8,
     .data = variablename_map,
 };
-```
