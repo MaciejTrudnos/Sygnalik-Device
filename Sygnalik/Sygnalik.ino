@@ -6,7 +6,7 @@
 #include "CST816D.h"
 #include "sms.cpp"
 #include "phone.cpp"
-#include "ok.cpp"
+#include "suzuki.cpp"
 #include "connectdevice.cpp"
 #include "speed.cpp"
 
@@ -128,7 +128,7 @@ void loop() {
       lv_img_set_src(img_obj, &phone);
     } else if (message_state == nonotifications && update_img) {
       Serial.println("no notifications");
-      lv_img_set_src(img_obj, &ok);
+      lv_img_set_src(img_obj, &suzuki);
     } else if (message_state == speedcamera && update_img) {
       Serial.println("speedcamera");
       lv_img_set_src(img_obj, &speed);
