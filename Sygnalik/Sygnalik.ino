@@ -19,6 +19,8 @@ CST816D touch(I2C_SDA, I2C_SCL, TP_RST, TP_INT);
 
 String message = "nonotifications";
 
+int img_angle = -900;
+
 #define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 bool update_img = true;
@@ -106,7 +108,8 @@ void setup() {
   img_obj = lv_img_create(lv_scr_act());
   lv_obj_align(img_obj, LV_ALIGN_CENTER, 0, 0);
 
-  lv_img_set_src(img_obj, &connectdevice);
+  lv_img_set_src(img_obj, &speed);
+  lv_img_set_angle(img_obj, img_angle);
 
   Serial.println("Setup done");
 }
