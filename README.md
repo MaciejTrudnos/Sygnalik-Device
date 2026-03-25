@@ -1,17 +1,15 @@
-# Sygnalik-Device
-A dedicated device that receives smartphone notifications via Bluetooth and displays them safely for motorcycle riders.
+# Sygnalik-Device  
 
-## Motivation
-The device was designed to replace a smartphone in a motorcycle mount with a separate dedicated device.  
-This allows the phone to stay safely stored, while the device connects via Bluetooth, reducing the risk of damage while riding.
+A dedicated device designed for the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App)
 
-## About the Device
-The **Sygnalik-Device** connects via Bluetooth to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) and displays incoming messages type on the device.
+## Overview  
+The device connects to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) via Bluetooth and receives notifications in real time.  
 
-## Supported Notification Types
-- 📩 **SMS**
-- 📞 **Incoming calls** 
-- 🚨 **Speed camera alerts**
+## Features  
+- [x] **SMS notifications**  
+- [x] **Incoming call notifications**  
+- [x] **Speed camera alerts (Poland)**  
+- [ ] **Navigation support**  
 
 ## Dev Module Configuration in Arduino IDE
 
