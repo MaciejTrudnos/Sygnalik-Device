@@ -6,10 +6,11 @@ A dedicated device designed for the [Sygnalik-App](https://github.com/MaciejTrud
 The device connects to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) via Bluetooth and receives notifications in real time.  
 
 ## Features  
-- [x] **SMS notifications**  
-- [x] **Incoming call notifications**  
-- [x] **Speed camera alerts (Poland)**  
-- [ ] **Navigation support**  
+- [x] **SMS alerts** – Get notified of incoming texts on your device.
+- [x] **Call alerts** – Real-time incoming call notifications.
+- [x] **Speed camera alerts** – Stay safe with localized alerts (Poland).
+- [x] ~~**Traccar integration** – Automatic GPS route tracking.~~ (Sygnalik App)
+- [ ] **Navigation support** – (In progress) Visual [turn-by-turn](https://github.com/MaciejTrudnos/Sygnalik-Directions-API) cues.
 
 ## Dev Module Configuration in Arduino IDE
 
