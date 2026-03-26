@@ -3,7 +3,7 @@
 A dedicated device designed for the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App)
 
 ## Overview  
-The device connects to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) via Bluetooth and receives notifications in real time.  
+The device ESP32-2424S012 with a 1.28" display connects to the [Sygnalik-App](https://github.com/MaciejTrudnos/Sygnalik-App) via Bluetooth and receives notifications in real time.
 
 ## Features  
 - [x] **SMS alerts** – Get notified of incoming texts on your device.
