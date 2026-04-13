@@ -46,3 +46,29 @@ const lv_img_dsc_t variablename = {
     .data_size = 57600 * LV_COLOR_SIZE / 8,
     .data = variablename_map,
 };
+```
+
+## Preview alerts
+
+| Preview | Description |
+|--------|-------------|
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/connectdevice.jpg" width="120"> | Connect to the Sygnalik app |
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/suzuki.jpg" width="120"> | Main device screen. |
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/phone.jpg" width="120"> | Incoming call alert |
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/sms.jpg" width="120"> | SMS alert |
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/speed.jpg" width="120"> | Speed camera warning |
+
+## Real Device Photos
+
+<table align="left">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/MaciejTrudnos/Sygnalik-Device/blob/main/assets/mysuzuki.jpg" height="260"><br>
+      <sub><b>Installed in vehicle – front view</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/MaciejTrudnos/Sygnalik-Device/blob/main/assets/mysuzuki-2.jpg" height="260"><br>
+      <sub><b>Installed in vehicle – side view</b></sub>
+    </td>
+  </tr>
+</table>
