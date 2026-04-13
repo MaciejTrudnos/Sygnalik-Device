@@ -53,7 +53,7 @@ const lv_img_dsc_t variablename = {
 | Preview | Description |
 |--------|-------------|
 | <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/connectdevice.jpg" width="120"> | Connect to the Sygnalik app |
-| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/suzuki.jpg" width="120"> | Main device screen. |
+| <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/suzuki.jpg" width="120"> | Main device screen |
 | <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/phone.jpg" width="120"> | Incoming call alert |
 | <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/sms.jpg" width="120"> | SMS alert |
 | <img src="https://raw.githubusercontent.com/MaciejTrudnos/Sygnalik-Device/main/assets/speed.jpg" width="120"> | Speed camera warning |
