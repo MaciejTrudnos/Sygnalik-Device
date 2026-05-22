@@ -9,6 +9,7 @@ The device ESP32-2424S012 with a 1.28" display connects to the [Sygnalik-App](ht
 - [x] **SMS alerts** – Get notified of incoming texts on your device.
 - [x] **Call alerts** – Real-time incoming call notifications.
 - [x] **Speed camera alerts** – Stay safe with localized alerts (Poland).
+- [x] **Speed control alerts** – Warnings about nearby police speed checks controls.
 - [x] ~~**Traccar integration** – Automatic GPS route tracking.~~ (Sygnalik App)
 - [ ] **Navigation support** – (In progress) Visual [turn-by-turn](https://github.com/MaciejTrudnos/Sygnalik-Directions-API) cues.
 
