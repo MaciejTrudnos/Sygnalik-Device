@@ -9,6 +9,7 @@
 #include "suzuki.cpp"
 #include "connectdevice.cpp"
 #include "speed.cpp"
+#include "speedcontrolwarning.cpp"
 
 #define I2C_SDA 4
 #define I2C_SCL 5
@@ -32,7 +33,8 @@ enum message_type {
   nonotifications,
   textmessage,
   call,
-  speedcamera
+  speedcamera,
+  speedcontrol
 };
 
 message_type message_state = noconnection;
@@ -50,6 +52,8 @@ class MyCallbacks : public BLECharacteristicCallbacks {
         message_state = call;
       } else if (rxValue == "speedcamera") {
         message_state = speedcamera;
+      } else if (rxValue == "speedcontrol") {
+        message_state = speedcontrol;
       }
     }
   }
@@ -108,7 +112,7 @@ void setup() {
   img_obj = lv_img_create(lv_scr_act());
   lv_obj_align(img_obj, LV_ALIGN_CENTER, 0, 0);
 
-  lv_img_set_src(img_obj, &speed);
+  lv_img_set_src(img_obj, &connectdevice);
   lv_img_set_angle(img_obj, img_angle);
 
   Serial.println("Setup done");
@@ -135,6 +139,9 @@ void loop() {
     } else if (message_state == speedcamera && update_img) {
       Serial.println("speedcamera");
       lv_img_set_src(img_obj, &speed);
+    } else if (message_state == speedcontrol && update_img) {
+      Serial.println("speedcontrol");
+      lv_img_set_src(img_obj, &speedcontrolwarning);
     }
 
     update_img = false;
