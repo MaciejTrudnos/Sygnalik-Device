@@ -26,6 +26,8 @@ int img_angle = -900;
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 bool update_img = true;
 lv_obj_t *img_obj;
+lv_obj_t *nav_label;
+String navText;
 
 enum message_type {
   donothing,
@@ -34,10 +36,16 @@ enum message_type {
   textmessage,
   call,
   speedcamera,
-  speedcontrol
+  speedcontrol,
+  navigation
 };
 
 message_type message_state = noconnection;
+
+bool alert_active() {
+  return message_state == textmessage || message_state == call ||
+         message_state == speedcamera || message_state == speedcontrol;
+}
 
 class MyCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
@@ -54,6 +62,14 @@ class MyCallbacks : public BLECharacteristicCallbacks {
         message_state = speedcamera;
       } else if (rxValue == "speedcontrol") {
         message_state = speedcontrol;
+      } else if (rxValue.startsWith("nav:")) {
+        navText = rxValue.substring(4);   // "W prawo|200 m"
+        if (navText.length() > 100) {
+          navText = navText.substring(0, 100);
+        }
+        if (!alert_active()) {
+          message_state = navigation;
+        }
       }
     }
   }
@@ -74,6 +90,20 @@ class MyServerCallbacks : public BLEServerCallbacks {
     BLEDevice::startAdvertising();
   }
 };
+
+void show_img(const lv_img_dsc_t *img) {
+  lv_obj_add_flag(nav_label, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_clear_flag(img_obj, LV_OBJ_FLAG_HIDDEN);
+  lv_img_set_src(img_obj, img);
+}
+
+void show_nav() {
+  lv_obj_add_flag(img_obj, LV_OBJ_FLAG_HIDDEN);
+  String navDisplay = navText;
+  navDisplay.replace("|", "\n");
+  lv_label_set_text(nav_label, navDisplay.c_str());
+  lv_obj_clear_flag(nav_label, LV_OBJ_FLAG_HIDDEN);
+}
 
 void setup() {
   Serial.begin(115200);
@@ -115,6 +145,18 @@ void setup() {
   lv_img_set_src(img_obj, &connectdevice);
   lv_img_set_angle(img_obj, img_angle);
 
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x000000), LV_PART_MAIN);
+  lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
+
+  nav_label = lv_label_create(lv_scr_act());
+  lv_label_set_text(nav_label, "");
+  lv_obj_set_width(nav_label, 200);
+  lv_obj_align(nav_label, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_set_style_text_color(nav_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+  lv_obj_set_style_text_font(nav_label, &lv_font_montserrat_16, LV_PART_MAIN);
+  lv_obj_set_style_text_align(nav_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+  lv_obj_add_flag(nav_label, LV_OBJ_FLAG_HIDDEN);
+
   Serial.println("Setup done");
 }
 
@@ -124,24 +166,27 @@ void loop() {
 
   if (message_state == noconnection && update_img) {
     Serial.println("show connectdevice");
-    lv_img_set_src(img_obj, &connectdevice);
+    show_img(&connectdevice);
     update_img = false;
   } else {
-    if (message_state == textmessage && update_img) {
+    if (message_state == navigation && update_img) {
+      Serial.println("show nav");
+      show_nav();
+    } else if (message_state == textmessage && update_img) {
       Serial.println("show sms");
-      lv_img_set_src(img_obj, &sms);
+      show_img(&sms);
     } else if (message_state == call && update_img) {
       Serial.println("show call");
-      lv_img_set_src(img_obj, &phone);
+      show_img(&phone);
     } else if (message_state == nonotifications && update_img) {
       Serial.println("no notifications");
-      lv_img_set_src(img_obj, &suzuki);
+      show_img(&suzuki);
     } else if (message_state == speedcamera && update_img) {
       Serial.println("speedcamera");
-      lv_img_set_src(img_obj, &speed);
+      show_img(&speed);
     } else if (message_state == speedcontrol && update_img) {
       Serial.println("speedcontrol");
-      lv_img_set_src(img_obj, &speedcontrolwarning);
+      show_img(&speedcontrolwarning);
     }
 
     update_img = false;
