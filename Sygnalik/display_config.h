@@ -52,7 +52,7 @@ class LGFX : public lgfx::LGFX_Device
         cfg.panel_height = 240;   // Actual display height
         cfg.offset_x = 0;         // X-axis offset
         cfg.offset_y = 0;         // Y-axis offset
-        cfg.offset_rotation = 0;  // Offset for rotation
+        cfg.offset_rotation = 3;  // Offset for rotation
         cfg.dummy_read_pixel = 8; // Dummy bits before reading pixels
         cfg.dummy_read_bits = 1;  // Dummy bits before reading non-pixel data
         cfg.readable = false;     // Set to true if the panel can read data

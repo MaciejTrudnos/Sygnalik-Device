@@ -20,7 +20,7 @@ CST816D touch(I2C_SDA, I2C_SCL, TP_RST, TP_INT);
 
 String message = "nonotifications";
 
-int img_angle = -900;
+int img_angle = 0;
 
 #define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
