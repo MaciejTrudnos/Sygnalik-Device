@@ -10,8 +10,7 @@ The device ESP32-2424S012 with a 1.28" display connects to the [Sygnalik-App](ht
 - [x] **Call alerts** – Real-time incoming call notifications.
 - [x] **Speed camera alerts** – Stay safe with localized alerts (Poland).
 - [x] **Speed control alerts** – Warnings about nearby police speed controls.
-- [x] ~~**Traccar integration** – Automatic GPS route tracking.~~ (Sygnalik App)
-- [ ] **Navigation support** – (In progress) Visual [turn-by-turn](https://github.com/MaciejTrudnos/Sygnalik-Directions-API) cues.
+- [x] **Navigation** – Displays text-based  [turn-by-turn](https://github.com/MaciejTrudnos/Sygnalik-Directions-API) with information on how to proceed along the route. cues.
 
 ## Dev Module Configuration in Arduino IDE
 
